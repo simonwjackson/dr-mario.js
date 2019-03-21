@@ -1,5 +1,5 @@
-import { uncurryN } from "ramda"
-import block from "./block"
+import { uncurryN } from 'ramda'
+import block from './block'
 
 const player = artboard => styles => player => {
   block(

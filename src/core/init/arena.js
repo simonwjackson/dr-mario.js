@@ -1,7 +1,7 @@
-import uncurryN from "ramda/es/uncurryN"
-import compose from "ramda/es/compose"
-import applyTo from "ramda/es/applyTo"
-import repeat from "ramda/es/repeat"
+import uncurryN from 'ramda/es/uncurryN'
+import compose from 'ramda/es/compose'
+import applyTo from 'ramda/es/applyTo'
+import repeat from 'ramda/es/repeat'
 
 const initArena = width => height =>
   compose(

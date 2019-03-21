@@ -1,5 +1,5 @@
-import arena from "./arena"
-import viruses from "./viruses"
+import arena from './arena'
+import viruses from './viruses'
 
 export default {
   arena,

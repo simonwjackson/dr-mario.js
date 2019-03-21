@@ -11,7 +11,7 @@ export default {
   },
   styles: {
     block: {
-      colors: ["#ff0000", "#00ff00", "#0000ff"],
+      colors: ['#ff0000', '#00ff00', '#0000ff'],
       size: 25
     }
   },

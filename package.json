@@ -12,6 +12,14 @@
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
-    "parcel-bundler": "^1.6.1"
+    "eslint-config-simonwjackson": "git+ssh://git@github.com/simonwjackson/eslint-config-simonwjackson.git",
+    "eslint-config-standard-fp": "^2.0.1",
+    "eslint": "^5.15.3",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "parcel-bundler": "^1.6.1",
+    "prettier": "^1.16.4"
   }
 }

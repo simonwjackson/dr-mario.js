@@ -1,13 +1,14 @@
-import * as R from "ramda"
-import * as Draw from "./draw"
-import create from "./draw/create"
-import createContext from "./context"
-import defaults from "./defaults"
-import init from "./core/init"
+import * as R from 'ramda'
+import * as Draw from './draw'
+import create from './draw/create'
+import createContext from './context'
+import defaults from './defaults'
+import init from './core/init'
 
 const context = createContext(defaults, {})
 const { canvas, artboard } = create(context.state.arena.resolution)
 const draw = Draw.withContext(context, artboard)
+
 document.body.appendChild(canvas)
 
 const tick = state => {

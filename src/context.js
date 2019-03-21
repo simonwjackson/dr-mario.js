@@ -1,14 +1,15 @@
-import compose from "ramda/es/compose"
-import mergeDeepRight from "ramda/es/mergeDeepRight"
-import applySpec from "ramda/es/applySpec"
-import multiply from "ramda/es/multiply"
-import assocPath from "ramda/es/assocPath"
-import curry from "ramda/es/curry"
-import __ from "ramda/es/__"
-import path from "ramda/es/path"
-import uncurryN from "ramda/es/uncurryN"
+import compose from 'ramda/es/compose'
+import mergeDeepRight from 'ramda/es/mergeDeepRight'
+import applySpec from 'ramda/es/applySpec'
+import multiply from 'ramda/es/multiply'
+import assocPath from 'ramda/es/assocPath'
+import curry from 'ramda/es/curry'
+import __ from 'ramda/es/__'
+import path from 'ramda/es/path'
+import uncurryN from 'ramda/es/uncurryN'
 
 const create = defaults => options => {
+  // eslint-disable-next-line fp/no-let
   let state = compose(
     mergeDeepRight(defaults),
     applySpec({
@@ -22,6 +23,7 @@ const create = defaults => options => {
   )(defaults.styles.block.size)
 
   const get = path(__, state)
+  // eslint-disable-next-line fp/no-mutation
   const set = curry((path, data) => (state = assocPath(path, data, state)))
 
   return {

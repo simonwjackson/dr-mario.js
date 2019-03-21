@@ -1,6 +1,6 @@
-import uncurryN from "ramda/es/uncurryN"
-import { mapIndexed } from "../utils"
-import block from "./block"
+import uncurryN from 'ramda/es/uncurryN'
+import { mapIndexed } from '../utils'
+import block from './block'
 
 export const arena = artboard => styles => arena => {
   mapIndexed((columns, row) => {

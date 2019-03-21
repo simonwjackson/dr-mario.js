@@ -1,16 +1,15 @@
-import map from "ramda/es/map"
-import applyTo from "ramda/es/applyTo"
-import evolve from "ramda/es/evolve"
-import partial from "ramda/es/partial"
-import __ from "ramda/es/__"
-import flip from "ramda/es/flip"
+import map from 'ramda/es/map'
+import applyTo from 'ramda/es/applyTo'
+import evolve from 'ramda/es/evolve'
+import partial from 'ramda/es/partial'
+import flip from 'ramda/es/flip'
 
-import block from "./block"
-import arena from "./arena"
-import player from "./player"
-import clear from "./clear"
-import create from "./create"
-import uncurryN from "ramda/es/uncurryN"
+import block from './block'
+import arena from './arena'
+import player from './player'
+import clear from './clear'
+import create from './create'
+import uncurryN from 'ramda/es/uncurryN'
 
 const partialTo = flip(partial)
 

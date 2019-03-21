@@ -1,6 +1,6 @@
-import map from "ramda/es/map"
-import addIndex from "ramda/es/addIndex"
-import uncurryN from "ramda/es/uncurryN"
+import map from 'ramda/es/map'
+import addIndex from 'ramda/es/addIndex'
+import uncurryN from 'ramda/es/uncurryN'
 
 export const mapIndexed = addIndex(map)
 const _getRandomInt = min => max => {
