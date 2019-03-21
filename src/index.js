@@ -1,6 +1,7 @@
 import * as R from "ramda";
-import Draw from "./draw";
+import * as Draw from "./draw";
 import { mapIndexed } from "./utils";
+import createContext from './context'
  
 if (module.hot) {
   module.hot.dispose(() => {
@@ -9,19 +10,12 @@ if (module.hot) {
   });
 }
 
-const DELETEblockSize = 25;
-const blocksWide = 10;
-const blocksTall = 16;
-const width = blocksWide * DELETEblockSize;
-const height = blocksTall * DELETEblockSize;
-
-
-
 const defaults = {
   level: 1,
   arena: {
     wide: 10,
     tall: 16,
+    matrix: undefined,
     resolution: {
       width: undefined,
       height: undefined
@@ -43,19 +37,9 @@ const defaults = {
   fps: 1
 };
 
-const state = R.compose(
-  R.mergeDeepRight(defaults),
-  R.applySpec({
-    arena: {
-      resolution: {
-        width: R.multiply(defaults.arena.wide),
-        height: R.multiply(defaults.arena.tall)
-      } 
-    }
-  })
-)(defaults.styles.block.size)
+const context = createContext(defaults, {})
 
-const createCanvas = (width, height) => {
+const createCanvas = ({width, height}) => {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
@@ -63,11 +47,11 @@ const createCanvas = (width, height) => {
   return canvas;
 };
 
-const canvas = createCanvas(state.arena.resolution.width, state.arena.resolution.height);
+const canvas = createCanvas(context.state.arena.resolution);
 const artboard = canvas.getContext("2d");
 document.body.appendChild(canvas);
 
-const draw = Draw(artboard)
+const draw = Draw.withContext(context)(artboard)
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -96,17 +80,15 @@ const initViruses = level => rows => {
 const tick = state => {
   state.player.pos.row++;
   
-  draw.clear(width, height);
-  draw.arena(state.styles)(state.arena)
-  draw.player(state.styles)(state.player)
+  draw.clear();
+  draw.arena()
+  draw.player()
 };
 
 const initAll = R.compose(
-  initViruses(state.level),
-  initArena(state.arena.wide)
-)(state.arena.tall);
+  initViruses(context.state.level),
+  initArena(context.state.arena.wide)
+)(context.state.arena.tall);
 
-
-
-state.arena = initAll
-state.interval = setInterval(() => tick(state), 1000 / state.fps);
+context.state.arena.matrix = initAll
+context.state.interval = setInterval(() => tick(context.state), 1000 / context.state.fps);
