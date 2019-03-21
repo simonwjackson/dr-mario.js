@@ -12,7 +12,7 @@ export default {
   styles: {
     block: {
       colors: ["#ff0000", "#00ff00", "#0000ff"],
-      size: 25, 
+      size: 25
     }
   },
   player: {
@@ -23,4 +23,4 @@ export default {
     matrix: [[0, 0], [3, 2]]
   },
   fps: 1
-};
+}
