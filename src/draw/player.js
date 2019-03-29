@@ -1,3 +1,5 @@
+/* eslint-disable fp/no-nil */
+/* eslint-disable fp/no-unused-expression */
 import { uncurryN } from 'ramda'
 import block from './block'
 
@@ -16,8 +18,8 @@ const player = artboard => styles => player => {
     artboard,
     styles,
     {
-      row: player.pos.row + 1,
-      column: player.pos.column
+      row: player.pos.row,
+      column: player.pos.column + 1
     },
     player.matrix[0][1]
   )
@@ -26,8 +28,8 @@ const player = artboard => styles => player => {
     artboard,
     styles,
     {
-      row: player.pos.row,
-      column: player.pos.column + 1
+      row: player.pos.row + 1 ,
+      column: player.pos.column
     },
     player.matrix[1][0]
   )

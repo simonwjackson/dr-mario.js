@@ -1,31 +1,81 @@
-import * as R from 'ramda'
 import * as Draw from './draw'
+import * as Move from './core/move'
+
 import create from './draw/create'
 import createContext from './context'
 import defaults from './defaults'
-import init from './core/init'
+import {
+  pipe,
+  compose,
+  evolve,
+  inc,
+  juxt,
+  partial,
+  prop,
+  tap,
+} from 'ramda'
+
+import event from './utils/event'
+import isLegalMove from './core/isLegalMove'
+import startIntervalWith from './utils/startIntervalWith'
+import controls from './browser/controls'
+
+import { withContext as initCore } from './core/init'
 
 const context = createContext(defaults, {})
-const { canvas, artboard } = create(context.state.arena.resolution)
+const {
+  canvas,
+  artboard
+} = create(context.get(['arena', 'resolution']))
+
 const draw = Draw.withContext(context, artboard)
+const move = Move.withContext(context)
 
-document.body.appendChild(canvas)
+const drawAll = juxt([
+  draw.clear,
+  draw.arena,
+  draw.player
+])
 
-const tick = state => {
-  state.player.pos.row++
+const handleKeyDown = pipe(
+  prop('code'),
+  controls(move),
+  tap(drawAll)
+)
 
-  draw.clear()
-  draw.arena()
-  draw.player()
+const tick = ({
+  get,
+  set
+}) => {
+  const legal = isLegalMove(
+    get(['arena']),
+    evolve({
+      pos: {
+        row: inc
+      }
+    })(get(['player']))
+  )
+
+  if (legal) move.down()
+  else console.log('copy onto board')
+
+  drawAll()
 }
 
-const initAll = R.compose(
-  init.viruses(context.state.level),
-  init.arena(context.state.arena.wide)
-)(context.state.arena.tall)
-
-context.state.arena.matrix = initAll
-context.state.interval = setInterval(
-  () => tick(context.state),
-  1000 / context.state.fps
+const initView = compose(
+  tap(drawAll),
+  () => document.body.appendChild(canvas),
+  () => event('keydown', handleKeyDown)
 )
+
+const initAll = compose(
+  initView,
+  initCore
+)
+
+// eslint-disable-next-line fp/no-unused-expression
+context.set(['interval'], startIntervalWith(
+  partial(initAll, [context]),
+  1000 / context.get(['fps']),
+  () => tick(context)
+))

@@ -22,13 +22,12 @@ const draw = artboard =>
     create
   })
 
-const _withContext = ({ state }) => artboard => {
-  console.log(artboard)
-  return evolve(
+const _withContext = ({ state, get }) => artboard =>
+  evolve(
     {
-      clear: partialTo([artboard, state.arena.resolution]),
-      arena: partialTo([artboard, state.styles, state.arena]),
-      player: partialTo([artboard, state.styles, state.player]),
+      clear: fn => () => fn(artboard, get(['arena', 'resolution'])),
+      arena: fn => () => fn(artboard, get(['styles']), get(['arena'])),
+      player: fn => () => fn(artboard, get(['styles']), get(['player'])),
       block: applyTo(artboard)
     },
     {
@@ -39,7 +38,6 @@ const _withContext = ({ state }) => artboard => {
       create
     }
   )
-}
 
 export const withContext = uncurryN(2, _withContext)
 export default draw

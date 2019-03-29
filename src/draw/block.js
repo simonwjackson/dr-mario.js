@@ -7,10 +7,10 @@ const block = artboard => styles => pos => type => {
   artboard.strokeStyle = '#ffffff'
   artboard.lineWidth = 2
 
-  if (type === 0) artboard.fillStyle = '#ffffff00'
-  if (type === 1) artboard.fillStyle = colors[0]
-  if (type === 2) artboard.fillStyle = colors[1]
-  if (type === 3) artboard.fillStyle = colors[2]
+  if (type === 0) artboard.fillStyle = colors[0]
+  if (type === 1) artboard.fillStyle = colors[1]
+  if (type === 2) artboard.fillStyle = colors[2]
+  if (type === 3) artboard.fillStyle = colors[3]
 
   const args = [size * column, size * row, size, size]
 

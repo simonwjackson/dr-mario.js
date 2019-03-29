@@ -3,10 +3,9 @@ import mergeDeepRight from 'ramda/es/mergeDeepRight'
 import applySpec from 'ramda/es/applySpec'
 import multiply from 'ramda/es/multiply'
 import assocPath from 'ramda/es/assocPath'
-import curry from 'ramda/es/curry'
-import __ from 'ramda/es/__'
 import path from 'ramda/es/path'
 import uncurryN from 'ramda/es/uncurryN'
+import tap from 'ramda/es/tap'
 
 const create = defaults => options => {
   // eslint-disable-next-line fp/no-let
@@ -22,14 +21,25 @@ const create = defaults => options => {
     })
   )(defaults.styles.block.size)
 
-  const get = path(__, state)
+  const get = arr => path(arr, state)
   // eslint-disable-next-line fp/no-mutation
-  const set = curry((path, data) => (state = assocPath(path, data, state)))
+  const set = path => data => compose(
+    tap(obj => state = obj),
+    assocPath
+  )(path, data, state)
+
+  // eslint-disable-next-line fp/no-mutation
+  const setWith = fn => path =>
+    compose(
+      tap(obj => state = obj),
+      assocPath
+    )(path, fn(get(path)), state)
 
   return {
     state,
     get,
-    set
+    set: uncurryN(2, set),
+    setWith: uncurryN(2, setWith)
   }
 }
 

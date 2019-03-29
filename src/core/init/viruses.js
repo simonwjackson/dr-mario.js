@@ -1,6 +1,6 @@
 import uncurryN from 'ramda/es/uncurryN'
 import map from 'ramda/es/map'
-import { mapIndexed, getRandomInt } from '../../utils'
+import { mapIndexed, getRandomInt } from '../../utils/index.js'
 import compose from 'ramda/es/compose'
 import reverse from 'ramda/es/reverse'
 import when from 'ramda/es/when'

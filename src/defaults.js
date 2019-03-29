@@ -11,7 +11,7 @@ export default {
   },
   styles: {
     block: {
-      colors: ['#ff0000', '#00ff00', '#0000ff'],
+      colors: ['#77777744', '#ff0000', '#00ff00', '#0000ff'],
       size: 25
     }
   },
@@ -20,7 +20,10 @@ export default {
       row: 0,
       column: 4
     },
-    matrix: [[0, 0], [3, 2]]
+    matrix: [
+      [1, 0],
+      [2, 0]
+    ]
   },
-  fps: 1
+  fps: 1.5
 }

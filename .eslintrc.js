@@ -4,14 +4,14 @@ module.exports = {
     "fp",
     "promise",
     "standard",
-    'prettier',
+    // 'prettier',
   ],
   "parserOptions": {
     "ecmaVersion": 7,
     "sourceType": "module"
   },
   rules: {
-    "prettier/prettier": "error",
+    // "prettier/prettier": "error",
     "fp/no-arguments": 2,
     "fp/no-class": 2,
     "fp/no-delete": 2,
@@ -31,5 +31,9 @@ module.exports = {
     "fp/no-valueof-field": 2,
     "no-var": 2,
     "prefer-spread": 2
+  },
+  "env": {
+    "browser": true,
+    "node": true
   }
 }

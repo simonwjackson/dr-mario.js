@@ -8,6 +8,7 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "http2": "^3.3.7",
     "ramda": "0.26.1"
   },
   "devDependencies": {
