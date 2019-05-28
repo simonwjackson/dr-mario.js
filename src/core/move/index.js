@@ -1,6 +1,7 @@
 import compose from 'ramda/es/compose'
 import when from 'ramda/es/when'
 import evolve from 'ramda/es/evolve'
+import tap from 'ramda/es/tap'
 import uncurryN from 'ramda/es/uncurryN'
 
 import right from './right'
@@ -13,25 +14,25 @@ const _withContext = ({ get, set }) =>
   evolve({
     left: fn => () =>
       compose(
-        set(['player']),
+        tap(set(['player'])),
         fn
       )(get(['arena']), get(['player'])),
 
     right: fn => () =>
       compose(
-        set(['player']),
+        tap(set(['player'])),
         fn
       )(get(['arena']), get(['player'])),
 
     down: fn => () =>
       compose(
-        set(['player']),
+        tap(set(['player'])),
         fn
       )(get(['arena']), get(['player'])),
 
     flip: fn => () =>
       compose(
-        when(isLegalMove(get(['arena'])), set(['player'])),
+        when(isLegalMove(get(['arena'])), tap(set(['player']))),
         evolve({
           matrix: fn
         }),

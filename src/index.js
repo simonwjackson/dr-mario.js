@@ -1,14 +1,18 @@
-import * as Draw from './draw'
+import * as Draw from './browser/canvas/draw'
 import * as Move from './core/move'
 
-import create from './draw/create'
-import createContext from './context'
-import defaults from './defaults'
+import create from './browser/canvas/draw/create'
+import createContext from './core/context'
+import defaults from './core/defaults'
+
 import {
+  apply,
+  __,
+  call,
+  when,
   pipe,
   compose,
-  evolve,
-  inc,
+  equals,
   juxt,
   partial,
   prop,
@@ -16,22 +20,21 @@ import {
 } from 'ramda'
 
 import event from './utils/event'
-import isLegalMove from './core/isLegalMove'
 import startIntervalWith from './utils/startIntervalWith'
 import controls from './browser/controls'
 
-import { withContext as initCore } from './core/init'
+import {
+  withContext as initCore
+} from './core/init'
 
 const context = createContext(defaults, {})
-const {
-  canvas,
-  artboard
-} = create(context.get(['arena', 'resolution']))
+const { canvas, artboard } = create(context.get(['arena', 'resolution']))
 
 const draw = Draw.withContext(context, artboard)
 const move = Move.withContext(context)
 
-const drawAll = juxt([
+// Move to withContext fn
+draw.all = juxt([
   draw.clear,
   draw.arena,
   draw.player
@@ -40,32 +43,30 @@ const drawAll = juxt([
 const handleKeyDown = pipe(
   prop('code'),
   controls(move),
-  tap(drawAll)
+  tap(draw.all)
 )
 
-const tick = ({
-  get,
-  set
-}) => {
-  const legal = isLegalMove(
-    get(['arena']),
-    evolve({
-      pos: {
-        row: inc
-      }
-    })(get(['player']))
+const copyToBoard = () => {}
+
+const tick = ({ get }) => {
+  const isStuck = compose(
+    apply(equals),
+    juxt([
+      partial(get, [ ['player'] ]),
+      call(__)
+    ])
   )
 
-  if (legal) move.down()
-  else console.log('copy onto board')
-
-  drawAll()
+  return juxt([
+    when(isStuck, copyToBoard),
+    draw.all,
+  ])(move.down)
 }
 
-const initView = compose(
-  tap(drawAll),
+const initView = pipe(
+  () => event('keydown', handleKeyDown),
   () => document.body.appendChild(canvas),
-  () => event('keydown', handleKeyDown)
+  tap(draw.all)
 )
 
 const initAll = compose(

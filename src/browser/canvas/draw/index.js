@@ -1,8 +1,6 @@
 import map from 'ramda/es/map'
 import applyTo from 'ramda/es/applyTo'
 import evolve from 'ramda/es/evolve'
-import partial from 'ramda/es/partial'
-import flip from 'ramda/es/flip'
 
 import block from './block'
 import arena from './arena'
@@ -10,8 +8,6 @@ import player from './player'
 import clear from './clear'
 import create from './create'
 import uncurryN from 'ramda/es/uncurryN'
-
-const partialTo = flip(partial)
 
 const draw = artboard =>
   map(applyTo(artboard), {
@@ -22,7 +18,7 @@ const draw = artboard =>
     create
   })
 
-const _withContext = ({ state, get }) => artboard =>
+const _withContext = ({ get }) => artboard =>
   evolve(
     {
       clear: fn => () => fn(artboard, get(['arena', 'resolution'])),
@@ -35,7 +31,7 @@ const _withContext = ({ state, get }) => artboard =>
       arena,
       player,
       block,
-      create
+      create,
     }
   )
 
