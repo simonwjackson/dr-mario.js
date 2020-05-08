@@ -5,6 +5,10 @@ import create from './browser/canvas/draw/create'
 import createContext from './core/context'
 import defaults from './core/defaults'
 
+/**
+ * @todo Reorder imports in alphabetical order
+ * @body Makes things a little cleaner.
+ */
 import {
   apply,
   __,
@@ -48,6 +52,7 @@ const handleKeyDown = pipe(
 
 const copyToBoard = () => {}
 
+// TODO: Move into separate file
 const tick = ({ get }) => {
   const isStuck = compose(
     apply(equals),
